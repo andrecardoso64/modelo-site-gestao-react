@@ -1,0 +1,160 @@
+/*style.css*/
+
+/*
+* Ordem dos estilos{
+*    tags do HTML;
+*    classes;
+*    ids;
+* }
+*/
+
+/*
+*
+* CSS DE USO GERAL
+*
+*/
+
+/*body {
+    background-color: var(--bs-body-color) !important;
+}*/
+
+.anchor-nodec {
+    transition: 100ms;
+    text-decoration: none;
+    color: black;
+    padding: 0.63rem;
+}
+
+
+.content {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*
+*
+* CSS DA BARRA DE NAVEGACAO
+*
+*/
+
+nav {
+    background-color: white;
+    padding: 0 1rem;
+}
+
+.nav-buttons {
+    list-style: none;
+    display: flex;
+    font-size: 22px;
+}
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-icon {
+    margin: 0rem 0.31rem;
+}
+
+.nav-opt {
+    display: flex;
+    align-items: center;
+}
+
+.nav-opt-container {
+    margin: 0 1rem;
+}
+
+.nav-opt-text {
+    font-size: 25px;
+}
+
+.nav-link-container .anchor-nodec:hover{
+    background-color: rgb(145, 145, 145);
+    transition: 100ms;
+    border-radius: 0.31rem;
+    color: white;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/*
+*
+* CSS DE 'index.html'
+*
+*/
+
+.card-icon {
+    font-size: 35px !important;
+}
+
+.status-card {
+    border-radius: 0.31rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    color: white;
+}
+
+/*
+*
+* CSS DOS FORMULARIOS
+*
+*/
+
+form {
+    background-color: white;
+    padding: 1rem 1rem 0.31rem 1rem;
+    border-radius: 0.62rem;
+    width: 90%;
+}
+
+form div {
+    margin: 1rem 0rem;
+}
+
+.btn-listar {
+    float: right;
+}
+
+.content-container {
+    width: 50%;
+}
+
+.menuOpt {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.formSection {
+    margin: 0.62rem 0rem;
+}
+
+.formButtons {
+    display: flex;
+    flex-direction: column;
+}
+
+.formBtnSubmit {
+    margin: 0.31rem 0 0.62rem 0;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-title {
+    padding: 0 2.8rem;
+}

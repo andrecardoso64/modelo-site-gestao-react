@@ -5,15 +5,15 @@ function Tarefas(){
         <div className="d-md-flex flex-md-wrap flex-column align-content-center">
             <h2 className="d-md-flex">Cadastro de Tarefas</h2>
             <Form className="p-md-1">
-                <Form.Group className="mt-1">
-                    <FloatingLabel className="mt-1" label="Título">
+                <Form.Group className="mt-1 mb-0">
+                    <FloatingLabel className="mt-1 mb-0" label="Título">
                         <Form.Control type="text" placeholder=''></Form.Control>
                     </FloatingLabel>
                 </Form.Group>
 
-                <Row>
-                    <Form.Group as={Col}>
-                        <FloatingLabel label="Prioridade da Tarefa">
+                <Row className="mb-0">
+                    <Form.Group as={Col} className="mb-0">
+                        <FloatingLabel className="mb-0" label="Prioridade da Tarefa">
                             <Form.Select>
                                 <option value="">Selecione</option>
                                 <option value="alta">Alta</option>
@@ -22,15 +22,15 @@ function Tarefas(){
                             </Form.Select>
                         </FloatingLabel>
                     </Form.Group>
-                    <Form.Group as={Col}>
-                        <FloatingLabel label="Responsável pela Tarefa">
+                    <Form.Group as={Col} className="mb-0">
+                        <FloatingLabel className="mb-0" label="Responsável pela Tarefa">
                             <Form.Select>
                             </Form.Select>
                         </FloatingLabel>
                     </Form.Group>
                 </Row>
 
-                <Form.Group>
+                <Form.Group className="mt-0">
                     <FloatingLabel label="Descrição">
                         <Form.Control as="textarea" rows={3}></Form.Control>
                     </FloatingLabel>
@@ -38,13 +38,13 @@ function Tarefas(){
 
                 <Row>
                     <Form.Group as={Col} xs={6} className="m-md-0">
-                        <FloatingLabel label="Data de Criação">
+                        <FloatingLabel className="m-md-0" label="Data de Criação">
                             <Form.Control type="date"></Form.Control>
                         </FloatingLabel>
                     </Form.Group>
 
                     <Form.Group as={Col} xs={6} className="m-md-0">
-                        <FloatingLabel label="Data de Conclusão">
+                        <FloatingLabel className="m-md-0" label="Data de Conclusão">
                             <Form.Control type="date"></Form.Control>
                         </FloatingLabel>
                     </Form.Group>

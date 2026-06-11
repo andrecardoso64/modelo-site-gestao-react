@@ -50,24 +50,23 @@ function Dashboard(){
         <Row className="my-4">
             <Col xs={6} className="mb-3">
                 <Card>
-                    <Card.Header>Distribuição de Status</Card.Header>
+                    <Card.Header className="bg-black text-white">Distribuição de Status</Card.Header>
                     <Card.Body></Card.Body>
                 </Card>
             </Col>
             <Col xs={6} className="mb-3">
                 <Card>
-                    <Card.Header>Projetos por Mês</Card.Header>
+                    <Card.Header className="bg-black text-white">Projetos por Mês</Card.Header>
                     <Card.Body></Card.Body>
                 </Card>
             </Col>
             <Col xs={12} className="mb-3">
                 <Card>
-                    <Card.Header>Projeto por Responsável</Card.Header>
+                    <Card.Header className="bg-black text-white">Projeto por Responsável</Card.Header>
                     <Card.Body></Card.Body>
                 </Card>
             </Col>
         </Row>
-        <div>Main Page</div>
     </div>
 )
 }

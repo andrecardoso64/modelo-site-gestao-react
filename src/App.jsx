@@ -8,6 +8,7 @@ import Dashboard from './Dashboard.jsx'
 import Usuarios from './Usuarios.jsx'
 import Projetos from './Projetos.jsx'
 import Tarefas from './Tarefas.jsx'
+import APICall from './APICall.jsx'
 
 function App() {
 

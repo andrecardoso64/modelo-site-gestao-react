@@ -19,13 +19,13 @@ function Projetos(){
 
                 <Row>
                     <Form.Group as={Col} xs={6} className="m-md-0">
-                        <FloatingLabel controlId="dtCriacao" label="Data de Criação">
+                        <FloatingLabel controlId="dtCriacao" className="m-md-0" label="Data de Criação">
                             <Form.Control id="dtCriacao" type="date"></Form.Control>
                         </FloatingLabel>
                     </Form.Group>
 
                     <Form.Group as={Col} xs={6} className="m-md-0">
-                        <FloatingLabel controlId="dtConclusao" label="Data de Conclusão">
+                        <FloatingLabel controlId="dtConclusao" className="m-md-0" label="Data de Conclusão">
                             <Form.Control id="dtConclusao" type="date"></Form.Control>
                         </FloatingLabel>
                     </Form.Group>

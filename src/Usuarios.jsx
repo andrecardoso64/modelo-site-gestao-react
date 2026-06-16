@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { Form, FloatingLabel, Button, Container } from "react-bootstrap"
+import { Form, FloatingLabel, Button } from "react-bootstrap"
 import { InputMask } from "@react-input/mask";
+import { Link } from "react-router";
 
 function Usuarios(){
 
@@ -28,6 +29,9 @@ function Usuarios(){
                 <h2 className="d-md-flex ">Cadastro de Usuários</h2>
 
                 <Form noValidate validated={formValido} onSubmit={handleSubmit} className="p-md-1">
+                    {<Form.Group>
+                        <Button variant="success"><Link to="/usuarios/listarUsuarios">Listar Usuários</Link></Button>
+                    </Form.Group>}
 
                     <Form.Group className="mt-1">
                         <FloatingLabel className="mt-1" controlId="nomeUsuario" label="Nome">
@@ -37,7 +41,7 @@ function Usuarios(){
 
                     <Form.Group>
                         <FloatingLabel controlId="cpf" label="CPF">
-                            <InputMask id="cpf" required type="text" placeholder='' onChange={(event) => setCpf(event.target.value)} className="form-control" mask="___.___.___-__" replacement={{ _: /\d/ }} showMask separate></InputMask>
+                            <InputMask id="cpf" minLength={14} required type="text" placeholder='' onChange={(event) => setCpf(event.target.value)} className="form-control" mask="___.___.___-__" replacement={{ _: /\d/ }} separate></InputMask>
                         </FloatingLabel>
                     </Form.Group>
 
@@ -71,7 +75,7 @@ function Usuarios(){
                     </Form.Group>
 
                     <Form.Group className="d-md-flex flex-column">
-                        <Button variant="success" type="submit" className="mb-2" >Cadastrar</Button>
+                        <Button variant="success" type="submit" className="mb-2">Cadastrar</Button>
                         <Button variant="outline-danger" as="input" type="reset" value="Cancelar" />
                     </Form.Group>
                 </Form>

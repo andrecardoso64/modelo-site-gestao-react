@@ -7,41 +7,33 @@ function Dashboard(){
             <Row>
                 <Col>
                     <Card bg="success">
-                        <Card.Body>
-                            <Card.Text className="text-white">
-                                <div id="concluidos">0</div>
-                                Concluídos
-                            </Card.Text>
+                        <Card.Body className="text-white">
+                            <div id="concluidos">0</div>
+                            Concluídos
                         </Card.Body>
                     </Card>
                 </Col>
                 <Col>
                     <Card bg="info">
                         <Card.Body>
-                            <Card.Text>
-                                <div>0</div>
-                                Em Andamento
-                            </Card.Text>
+                            <div>0</div>
+                            Em Andamento
                         </Card.Body>
                     </Card>
                 </Col>
                 <Col>
                     <Card bg="warning">
                         <Card.Body>
-                            <Card.Text>
-                                <div>0</div>
-                                Pendentes
-                            </Card.Text>
+                            <div>0</div>
+                            Pendentes
                         </Card.Body>
                     </Card>
                 </Col>
                 <Col>
                     <Card bg="danger">
-                        <Card.Body>
-                            <Card.Text className="text-white">
-                                <div>0</div>
-                                Cancelados
-                            </Card.Text>
+                        <Card.Body className="text-white">
+                            <div>0</div>
+                            Cancelados
                         </Card.Body>
                     </Card>
                 </Col>

@@ -84,7 +84,7 @@ function NavBar() {
         <Route path='/usuarios' element={<Usuarios />}></Route>
         <Route path='/projetos' element={<Projetos />}></Route>
         <Route path='/tarefas' element={<Tarefas />}></Route>
-        <Route path="/usuarios/listarUsuarios" element={<ListarUsuarios />}></Route>
+        <Route path="/listarUsuarios" element={<ListarUsuarios />}></Route>
       </Routes>
     </div>
   )

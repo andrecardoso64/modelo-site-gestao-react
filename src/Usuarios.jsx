@@ -12,6 +12,43 @@ function Usuarios(){
     const [status, setStatus] = useState('ativo');
     const [senha, setSenha] = useState('');
 
+    const usuario = {
+        nome:nome,
+        cpf:cpf,
+        email:email,
+        dtNascimento:dtNascimento,
+        status:status,
+        senha:senha
+    };
+
+    const salvar = async () => {
+        const user ={
+            nome:nome,
+            email:email,
+            senha:senha,
+            role:'ROLE_ADMIN'
+        };
+
+        try {
+            
+            const response = await fetch('https://spring-boot-treina-recife-turma-11-production.up.railway.app/api/v1/public/usuarios', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            });
+
+            const dados = await response.json();
+            console.log(dados);
+            alert('Usuario Cadastrado com sucesso');
+
+        } catch (error) {
+            console.log(error);
+            alert('Erro no cadastro do usuario');
+        }
+    };
+
     const [formValido, setFormValido] = useState(false);
 
     const handleSubmit = (event) => {
@@ -19,18 +56,21 @@ function Usuarios(){
         if (form.checkValidity() === false){
             event.preventDefault();
             event.stopPropagation();
+        } else{
+            salvar;
         }
 
         setFormValido(true);
     };
 
+    //noValidate validated={formValido}
     return (
         <div className="d-md-flex flex-md-wrap flex-column align-content-center">
                 <h2 className="d-md-flex ">Cadastro de Usuários</h2>
 
-                <Form noValidate validated={formValido} onSubmit={handleSubmit} className="p-md-1">
+                <Form className="p-md-1">
                     {<Form.Group>
-                        <Button variant="success"><Link to="/usuarios/listarUsuarios">Listar Usuários</Link></Button>
+                        <Button variant="success"><Link to="/listarUsuarios">Listar Usuários</Link></Button>
                     </Form.Group>}
 
                     <Form.Group className="mt-1">
@@ -67,15 +107,13 @@ function Usuarios(){
 
                     <Form.Group id="campoSenha">
                         <FloatingLabel controlId="senha" label="Senha" className="mb-0">
-                            <Form.Control required minLength={8} maxLength={20} id="senha" type="password" placeholder='' onChange={(event) => {
-                                setSenha(event.target.value);
-                            }}></Form.Control>
+                            <Form.Control required minLength={8} maxLength={20} id="senha" type="password" placeholder='' onChange={(event) => {setSenha(event.target.value)}}></Form.Control>
                         </FloatingLabel>
                         <Form.Text id="helpSenha" className="d-sm-flex justify-content-start">Sua senha deve ter de 8 a 20 caracteres, contendo letras e numeros, e não deve ter espaços, caracteres especiais, ou emojis.</Form.Text>
                     </Form.Group>
 
                     <Form.Group className="d-md-flex flex-column">
-                        <Button variant="success" type="submit" className="mb-2">Cadastrar</Button>
+                        <Button variant="success" onClick={salvar} className="mb-2">Cadastrar</Button>
                         <Button variant="outline-danger" as="input" type="reset" value="Cancelar" />
                     </Form.Group>
                 </Form>

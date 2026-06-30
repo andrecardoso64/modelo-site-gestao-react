@@ -16,7 +16,6 @@ import Dashboard from './Dashboard.jsx'
 import Usuarios from './Usuarios.jsx'
 import Projetos from './Projetos.jsx'
 import Tarefas from './Tarefas.jsx'
-import ListarUsuarios from './ListarUsuarios.jsx'
 
 function NavBar() {
 
@@ -84,7 +83,6 @@ function NavBar() {
         <Route path='/usuarios' element={<Usuarios />}></Route>
         <Route path='/projetos' element={<Projetos />}></Route>
         <Route path='/tarefas' element={<Tarefas />}></Route>
-        <Route path="/listarUsuarios" element={<ListarUsuarios />}></Route>
       </Routes>
     </div>
   )

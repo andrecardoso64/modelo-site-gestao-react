@@ -32,6 +32,10 @@
     align-items: center;
 }
 
+.text-justify {
+    text-align: justify;
+}
+
 /*
 *
 * CSS DA BARRA DE NAVEGACAO

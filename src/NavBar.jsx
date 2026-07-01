@@ -1,8 +1,11 @@
-//import { Navbar, Container } from 'react-bootstrap'
 import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
+import { Container, Nav, Navbar, Button, Modal, Form, FloatingLabel } from 'react-bootstrap'
+import { InputMask } from '@react-input/mask'
+
 import './App.css'
 import './style.css'
+
 import logo from './assets/logo.png'
 import person_add from './assets/person_add_black.svg'
 import person_add_light from './assets/person_add_light.svg'
@@ -10,8 +13,6 @@ import task_add from './assets/assignment_add.svg'
 import task_add_light from './assets/assignment_add_light.svg'
 import project from './assets/dashboard.svg'
 import project_light from './assets/dashboard_light.svg'
-import { Nav, Container, Navbar, Button, Modal, Form } from 'react-bootstrap'
-import { InputMask } from '@react-input/mask'
 import Dashboard from './Dashboard.jsx'
 import Usuarios from './Usuarios.jsx'
 import Projetos from './Projetos.jsx'
@@ -26,7 +27,6 @@ function NavBar() {
 
   return (
     <div>
-
       <Navbar className='justify-content-between align-items-center mb-4'>
         <Container>
               <Navbar.Collapse>
@@ -61,18 +61,21 @@ function NavBar() {
       </Navbar>
 
       <Modal centered show={show} onHide={()=>setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login de Usuario</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+        <Modal.Header closeButton><Modal.Title>Login de Usuario</Modal.Title></Modal.Header>
+        <Modal.Body className="d-md-flex justify-content-center pt-0">
           <Form>
             <Form.Group>
-              <Form.Label>CPF:</Form.Label>
-              <InputMask id="cpf" minLength={14} required type="text" placeholder='000.000.000-00' className="form-control" mask="___.___.___-__" replacement={{ _: /\d/ }} separate></InputMask>
+              <FloatingLabel controlId="cpf" label="CPF">
+                <InputMask name="cpf" minLength={14} required type="text" placeholder='' className="form-control" mask="___.___.___-__" replacement={{ _: /\d/ }} separate></InputMask>
+              </FloatingLabel>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Senha:</Form.Label>
-              <Form.Control type='password'></Form.Control>
+              <FloatingLabel controlId="senha" label="Senha">
+                <Form.Control name="senha" type='password' placeholder=''></Form.Control>
+              </FloatingLabel>
+            </Form.Group>
+            <Form.Group className="d-sm-flex flex-column align-items-end">
+              <div className='my-0'><Button disabled>Login</Button></div>
             </Form.Group>
           </Form>
         </Modal.Body>

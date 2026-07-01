@@ -5,14 +5,14 @@ import './style.css';
 
 function Usuarios(){
 
-    const [formValido, setFormValido] = useState(false);
-    const [deletionValido, setDeletionValido] = useState(false);
-    const [counter, setCounter] = useState(0);
+    const [formValido, setFormValido] = useState(false); //validates the main form
+    const [deletionValido, setDeletionValido] = useState(false); //validates the selects in the modal for deletion
+    const [counter, setCounter] = useState(0); //counter for the number of selects submitted in the modal for deletion
 
-    const [buttons, setButtons] = useState([]);
+    const [buttons, setButtons] = useState([]); //list of buttons in the modal for deletion
     const [selectHidden, setSelectHidden] = useState(true);
     const [divHidden, setDivHidden] = useState(false);
-    const [excluirHidden, setExcluirHidden] = useState(true);
+    const [excluirHidden, setExcluirHidden] = useState(true); //hides the delete button
 
     const [showCad, setShowCad] = useState(false);
     const [showDel, setShowDel] = useState(false);
@@ -69,15 +69,15 @@ function Usuarios(){
 
     useEffect(() => {mostrarUsuarios()}, [])
 
-    const getUsuario = async(id) => {
+    const getUsuario = async(usuarioId) => {
 
         try{
-            const response = await fetch(`http://localhost:8080/api/usuarios/${id}`);
+            const response = await fetch(`http://localhost:8080/api/usuarios/${usuarioId}`);
 
             const dados = await response.json();
             console.log(dados);
 
-            setUsuarioId(id);
+            setUsuarioId(usuarioId);
 
             setUsuario((prevState) => ({...prevState, ...dados}))
             
@@ -87,14 +87,11 @@ function Usuarios(){
     }
 
     
-    const getProjeto = async (id) => {
+    const getProjeto = async (projetoId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/projetos/${id}`);
+            const response = await fetch(`http://localhost:8080/api/projetos/${projetoId}`);
 
             const dados = await response.json();
-
-            console.log('Result of get Projeto: ');
-            console.log(dados);
             
             setProjeto((prevState) => ({...prevState,...dados}));
 
@@ -141,11 +138,11 @@ function Usuarios(){
         }
     };
 
-    const editar = async (id) => {
+    const editar = async (responsavelId) => {
         const usuarioEd = usuario;
 
         try{
-            const response = await fetch(`http://localhost:8080/api/usuarios/${id}`, {
+            const response = await fetch(`http://localhost:8080/api/usuarios/${responsavelId}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type":"application/json"
@@ -161,8 +158,8 @@ function Usuarios(){
         }
     };
 
-    const checkProjetosLinkedToUsuario = async (id) => {
-        if(id > 0){
+    const checkProjetosLinkedToUsuario = async (responsavelId) => {
+        if(responsavelId > 0){
             try {
                 const projetosTemp = [];
 
@@ -171,12 +168,8 @@ function Usuarios(){
                 const dados = await response.json();
 
                 for(let i = 0; i < dados.length; i++){
-                    if(dados[i].responsavelId === id){
-
-                        console.log(`Usuario (id: ${id}) eh responsavel pelo projeto id: ${dados[i].id}`);
+                    if(dados[i].responsavelId === responsavelId){ 
                         projetosTemp.push(dados[i]);
-                    } else{
-                        console.log(`Usuario (id: ${id}) nao eh responsavel pelo projeto id: ${dados[i].id}`)
                     }
                 }
 
@@ -199,22 +192,19 @@ function Usuarios(){
 
                 for(let i = 0; i < dados.length; i++){
                     if(dados[i].responsavelId === responsavelId){
-
-                        console.log(`Usuario (id: ${responsavelId}) eh responsavel pela tarefa id: ${dados[i].id}`);
                         tarefasTemp.push(dados[i]);
-                    } else{
-                        console.log(`Usuario (id: ${responsavelId}) NÃO eh responsavel pela tarefa id: ${dados[i].id}`)
                     }
                 }
 
                 setTarefasLinked(tarefasTemp);
 
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
         }
     };
 
+    //edits the user responsible for the project
     const putNewResponsavelProjeto = async (projetoId, newResponsavelId) => {
 
         const projetoPut = projeto;
@@ -236,21 +226,18 @@ function Usuarios(){
             } else {
                 alert('Projeto alterado com sucesso');
             }
-            
 
             } catch (error) {
                 console.log(error);
-                console.log('Erro ao atualizar responsavel do projeto')
+                console.log('Erro ao atualizar responsavel do projeto');
             }
     };
 
+    //edits the user responsible for the task
     const putNewResponsavelTarefa = async (tarefaId, newResponsavelId) => {
 
-        console.log(`Id do Projeto:${tarefaId}`);
-        console.log(`Id do Responsavel:${newResponsavelId}`);
-
         const tarefaPut = tarefa;
-        tarefaPut.responsavelId = newResponsavelId
+        tarefaPut.responsavelId = newResponsavelId;
 
         try {
 
@@ -268,7 +255,6 @@ function Usuarios(){
             } else {
                 alert('Tarefa alterada com sucesso');
             }
-            
 
             } catch (error) {
                 console.log(error);
@@ -276,10 +262,9 @@ function Usuarios(){
             }
     }
 
-    //This func deletes, but it spills an error
-    const excluir = async (id) => {
+    const excluir = async (usuarioId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/usuarios/${id}`, {
+            const response = await fetch(`http://localhost:8080/api/usuarios/${usuarioId}`, {
                 method: 'DELETE',
             })
 
@@ -297,9 +282,6 @@ function Usuarios(){
 
     const handleChange = (e) => {
         setUsuario((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-        console.log(e.target.name);
-        console.log(e.target.value);
-        console.log(usuario)
     };
 
     const handleSubmit = (event) => {
@@ -316,91 +298,95 @@ function Usuarios(){
 
     return (
         <div className="d-md-flex flex-md-wrap flex-column align-content-center">
-                <h2 className="d-md-flex justify-content-center">Lista de Usuarios</h2>
-                <div className="my-4">
-                    <Button onClick={() => {
-                        setShowCad(true);
-                        setEditMode(false);
-                    }}>Cadastrar</Button></div>
-                <div className="d-md-flex flex-wrap my-3 justify-content-center">
-                        {
-                            users.map((user) => (
-                                <Card key={user.id} className="mx-2 my-2 col-3">
-                                    <Card.Header>{user.id} - {user.nome}</Card.Header>
-                                    <Card.Body>
-                                        <div>CPF: {user.cpf}</div>
-                                        <div>E-mail: {user.email}</div>
-                                        <div>Status: {user.status}</div>
-                                        <div className="mt-3">
-                                            <Button className="mx-1" variant="success" onClick={() => {
-                                                setShowCad(true);
-                                                setEditMode(true);
-                                                getUsuario(user.id);
-                                                setUsuarioId(user.id);
-                                                }}>Editar</Button>
-                                            <Button className="mx-1" variant="danger" onClick={() => {
-                                                setShowDel(true);
-                                                setUsuarioId(user.id);
-                                                }}>Excluir</Button>
-                                        </div>
-                                    </Card.Body>
-                                </Card>))
-                        }
-                </div>
+            <h2 className="d-md-flex justify-content-center">Lista de Usuarios</h2>
+            <div className="my-4">
+                <Button onClick={() => {
+                    setShowCad(true);
+                    setEditMode(false);
+                }}>Cadastrar</Button></div>
+            <div className="d-md-flex flex-wrap my-3 justify-content-center">
+                {
+                    users.map((user) => (
+                        <Card key={user.id} className="mx-2 my-2 col-3">
+                            <Card.Header>{user.id} - {user.nome}</Card.Header>
+                            <Card.Body>
+                                <div>CPF: {user.cpf}</div>
+                                <div>E-mail: {user.email}</div>
+                                <div>Status: {user.status}</div>
+                                <div className="mt-3">
+                                    <Button className="mx-1" variant="success" onClick={() => {
+                                        setShowCad(true);
+                                        setEditMode(true);
+                                        getUsuario(user.id);
+                                        setUsuarioId(user.id);
+                                    }}>Editar</Button>
+                                    <Button className="mx-1" variant="danger" onClick={() => {
+                                        setShowDel(true);
+                                        setUsuarioId(user.id);
+                                    }}>Excluir</Button>
+                                </div>
+                            </Card.Body>
+                        </Card>))
+                }
+            </div>
 
-                <Modal centered backdrop={"static"} size="lg" show={showCad} onHide={()=>setShowCad(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Cadastro de Usuários</Modal.Title>
-                    </Modal.Header>
+            <Modal centered backdrop={"static"} size="lg" show={showCad} onHide={()=>setShowCad(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Cadastro de Usuários</Modal.Title>
+            </Modal.Header>
 
-                    <Modal.Body className="d-md-flex justify-content-center">
+            <Modal.Body className="d-md-flex justify-content-center">
 
-                        <Form noValidate validated={formValido} onSubmit={handleSubmit} className="p-md-1">
+                <Form noValidate validated={formValido} onSubmit={handleSubmit} className="p-md-1">
 
-                        <Form.Group className="mt-1">
-                            <FloatingLabel className="mt-1" controlId="nomeUsuario" label="Nome">
-                                <Form.Control type="text" required name="nome" placeholder='' value={usuario.nome} onChange={handleChange}></Form.Control>
-                            </FloatingLabel>
-                        </Form.Group>
+                    <Form.Group id="campoNome" className="mt-1">
+                        <FloatingLabel className="mt-1" controlId="nome" label="Nome">
+                            <Form.Control type="text" required name="nome" placeholder='' value={usuario.nome} onChange={handleChange}></Form.Control>
+                        </FloatingLabel>
+                    </Form.Group>
 
-                        <Form.Group>
-                            <FloatingLabel controlId="cpf" label="CPF">
-                                <InputMask id="cpf" minLength={14} required name="cpf" type="text" placeholder='' value={usuario.cpf} onChange={handleChange} className="form-control" mask="___.___.___-__" replacement={{ _: /\d/ }} separate></InputMask>
-                            </FloatingLabel>
-                        </Form.Group>
+                    <Form.Group id="campoCpf">
+                        <FloatingLabel controlId="cpf" label="CPF">
+                            <InputMask minLength={14} required name="cpf" type="text" placeholder='' value={usuario.cpf} onChange={handleChange} className="form-control" mask="___.___.___-__" replacement={{ _: /\d/ }} separate></InputMask>
+                        </FloatingLabel>
+                    </Form.Group>
 
-                        <Form.Group>
-                            <FloatingLabel controlId="email" label="E-mail">
-                                <Form.Control required name="email" type="text" placeholder='' value={usuario.email} onChange={handleChange}></Form.Control>
-                            </FloatingLabel>
-                        </Form.Group>
-                        <Form.Group>
-                            <FloatingLabel controlId="dtNascimento" label="Data de Nascimento">
-                                <Form.Control required name="dtNascimento" type="date" value={usuario.dtNascimento} onChange={handleChange}></Form.Control>
-                            </FloatingLabel>
-                        </Form.Group>
-                        <Form.Group id="statusContainer">
-                            <FloatingLabel controlId="statusUsuario" label="Status">
-                                <Form.Select required name="status" value={usuario.status} onChange={handleChange}>
-                                    <option value="ativo">Ativo</option>
-                                    <option value="inativo">Inativo</option>
-                                    <option value="bloqueado">Bloqueado</option>
-                                </Form.Select>
-                            </FloatingLabel>
-                        </Form.Group>
+                    <Form.Group id="campoEmail">
+                        <FloatingLabel controlId="email" label="E-mail">
+                            <Form.Control required name="email" type="text" placeholder='' value={usuario.email} onChange={handleChange}></Form.Control>
+                        </FloatingLabel>
+                    </Form.Group>
 
-                        <Form.Group id="campoSenha">
-                            <FloatingLabel controlId="senha" label="Senha" className="mb-0">
-                                <Form.Control required name="senha" minLength={8} maxLength={20} id="senha" type="password" placeholder='' value={usuario.senha} onChange={handleChange}></Form.Control>
-                            </FloatingLabel>
-                            <Form.Text id="helpSenha" className="d-sm-flex justify-content-start">Sua senha deve ter de 8 a 20 caracteres, contendo letras e numeros, e não deve ter espaços, caracteres especiais, ou emojis.</Form.Text>
-                        </Form.Group>
+                    <Form.Group id="campoDtNascimento">
+                        <FloatingLabel controlId="dtNascimento" label="Data de Nascimento">
+                            <Form.Control required name="dtNascimento" type="date" value={usuario.dtNascimento} onChange={handleChange}></Form.Control>
+                        </FloatingLabel>
+                    </Form.Group>
 
-                        <Form.Group className="d-md-flex flex-column">
-                            <Button variant="success" type="submit" className="mb-2">Cadastrar</Button>
-                            <Button variant="outline-danger" onClick={() => {setShowCad(false)}}>Cancelar</Button>
-                        </Form.Group>
+                    <Form.Group id="campoStatus">
+                        <FloatingLabel controlId="status" label="Status">
+                            <Form.Select required name="status" value={usuario.status} onChange={handleChange}>
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                                <option value="bloqueado">Bloqueado</option>
+                            </Form.Select>
+                        </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group id="campoSenha">
+                        <FloatingLabel controlId="senha" label="Senha" className="mb-0">
+                            <Form.Control required name="senha" minLength={8} maxLength={20} type="password" placeholder='' value={usuario.senha} onChange={handleChange}></Form.Control>
+                        </FloatingLabel>
+                        <Form.Text id="helpSenha" className="d-sm-flex justify-content-start">Sua senha deve ter de 8 a 20 caracteres, contendo letras e numeros, e não deve ter espaços, caracteres especiais, ou emojis.</Form.Text>
+                    </Form.Group>
+
+                    <Form.Group className="d-md-flex flex-column">
+                        <Button variant="success" type="submit" className="mb-2">Cadastrar</Button>
+                        <Button variant="outline-danger" onClick={() => {setShowCad(false)}}>Cancelar</Button>
+                    </Form.Group>
+
                     </Form>
+
                     </Modal.Body>
                 </Modal>
 
@@ -416,9 +402,7 @@ function Usuarios(){
                     setSelectHidden(true);
                     }}>
 
-                    <Modal.Header>
-                    <Modal.Title>Exclusão de Usuario</Modal.Title>
-                    </Modal.Header>
+                    <Modal.Header><Modal.Title>Exclusão de Usuario</Modal.Title></Modal.Header>
 
                     <Modal.Body>
                         <div onChange={(event) => {
@@ -445,8 +429,7 @@ function Usuarios(){
                                     alert('Cancelamento de usuário cancelado')
                                     setShowDel(false);
                                 }
-                                
-                                }}>
+                            }}>
 
                                 <div>
                                     <h2>ATENÇÃO</h2>
@@ -504,22 +487,27 @@ function Usuarios(){
                                     }
                                     setDeletionValido(true);
                                 }}>
-                                    <div hidden={selectHidden}>Select a new user for project {projeto.nome}</div>
+                                    <div hidden={selectHidden}>Selecione um novo usuário para o projeto {projeto.nome}</div>
                                     <Form.Group>
                                         <Form.Select id={projeto.id} required hidden={selectHidden} onChange={(event) => {
                                             projeto.responsavelId = event.target.value;
-                                            }}>
-                                                        <option value="" hidden>Selecione um responsavel</option>
+                                        }}>
+
+                                            <option value="" hidden>Selecione um responsavel</option>
                                             {users.map((user) => (user.id === usuarioId ? '' :
                                                 <option value={user.id}>
                                                     {user.id} - {user.nome}
-                                                </option>))}
+                                                </option>
+                                            ))}
+
                                         </Form.Select>
                                     </Form.Group>
+
                                     <div>
                                         <Button type="submit" id={projeto.id} hidden variant="success" onClick={() => setCounter(counter+1)}>Confirmar</Button>
-                                        </div>
-                                </Form>))}
+                                    </div>
+                                </Form>
+                            ))}
 
                                 {tarefasLinked.map((tarefa) => (
                                 <Form noValidate validated={deletionValido} onChange={(event) => {

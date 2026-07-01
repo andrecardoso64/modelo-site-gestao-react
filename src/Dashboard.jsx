@@ -37,13 +37,14 @@ function Dashboard(){
                 const dados = await response.json();
 
                 setProjetos(dados);
+
+                dados.map((projeto) => {projeto.status === "emAndamento" ? setProjetosEmAndamento(projetosEmAndamento+1) : ''});
+                dados.map((projeto) => {projeto.status === "pendente" ? setProjetosPendentes(projetosPendentes+1) : ''});
     
             } catch (error) {
                 console.log(error);
             }
         }
-
-        const countProjetos = async () => {};
 
         useEffect(() => {mostrarProjetos()}, []);
     

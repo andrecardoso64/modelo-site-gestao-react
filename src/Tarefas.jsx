@@ -140,9 +140,6 @@ function Tarefas(){
 
     const handleChange = (e) => {
         setTarefa((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-        console.log(e.target.name);
-        console.log(e.target.value);
-        console.log(tarefa);
     };
 
     const handleSubmit = (event) => {
@@ -165,38 +162,40 @@ function Tarefas(){
 
     return(
         <div className="d-md-flex flex-md-wrap flex-column align-content-center">
-            <div>
-                <h2 className="d-md-flex">Cadastro de Tarefas</h2>
+            <h2 className="d-md-flex justify-content-center">Lista de Tarefas</h2>
+            <div className="my-4">
                 <Button onClick={() => {
                     setShowCad(true);
                     setEditMode(false);
                     }}>Cadastrar</Button>
             </div>
+            <div className="d-md-flex flex-wrap my-3 justify-content-center">
                 {
                     tarefas.map((task) => (
-                    <Card key={task.id} className="mx-2 my-2 col-3">
-                        <Card.Header>{task.id} - {task.titulo}</Card.Header>
-                        <Card.Body>
-                            <div>Data de Criação: {task.dtCriacao}</div>
-                            <div>Data de Conclusão: {task.dtConclusao}</div>
-                            <div>Status: {task.status}</div>
-                            <div>Id do Projeto: {task.projetoId}</div>
-                            <div>Id do Responsavel: {task.responsavelId}</div>
-                            <div className="mt-3">
-                                <Button className="mx-1" variant="success" onClick={() => {
-                                    setShowCad(true);
-                                    setTarefaId(task.id);
-                                    setEditMode(true);
-                                    getTarefa(task.id);
-                                }}>Editar</Button>
-                                <Button className="mx-1" variant="danger" onClick={() => {
-                                    setShowDel(true);
-                                    setTarefaId(task.id);
-                                }}>Excluir</Button>
-                            </div>
-                        </Card.Body>
-                    </Card>))
+                        <Card key={task.id} className="mx-2 my-2 col-3">
+                            <Card.Header>{task.id} - {task.titulo}</Card.Header>
+                            <Card.Body>
+                                <div>Data de Criação: {task.dtCriacao}</div>
+                                <div>Data de Conclusão: {task.dtConclusao}</div>
+                                <div>Status: {task.status}</div>
+                                <div>Id do Projeto: {task.projetoId}</div>
+                                <div>Id do Responsavel: {task.responsavelId}</div>
+                                <div className="mt-3">
+                                    <Button className="mx-1" variant="success" onClick={() => {
+                                        setShowCad(true);
+                                        setTarefaId(task.id);
+                                        setEditMode(true);
+                                        getTarefa(task.id);
+                                    }}>Editar</Button>
+                                    <Button className="mx-1" variant="danger" onClick={() => {
+                                        setShowDel(true);
+                                        setTarefaId(task.id);
+                                    }}>Excluir</Button>
+                                </div>
+                            </Card.Body>
+                        </Card>))
                 }
+            </div>
             
 
             <Modal centered backdrop={"static"} size="lg" show={showCad} onShow={() => {
@@ -204,19 +203,19 @@ function Tarefas(){
                 mostrarUsuarios();
             }} onHide={()=>setShowCad(false)}>
                 <Modal.Header closeButton>
-                    <h2 className="d-md-flex">Cadastro de Projetos</h2>
+                    <h2 className="d-md-flex">Cadastro de Tarefas</h2>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="d-md-flex justify-content-center">
                     <Form noValidate validated={formValido} onSubmit={handleSubmit} className="p-md-1">
                         <Form.Group className="mt-1 mb-0">
-                            <FloatingLabel className="mt-1 mb-0" label="Título">
+                            <FloatingLabel controlId="titulo" className="mt-1 mb-0" label="Título">
                                 <Form.Control required name="titulo" value={tarefa.titulo} type="text" placeholder='' onChange={handleChange}></Form.Control>
                             </FloatingLabel>
                         </Form.Group>
 
                         <Row className="mb-0">
                             <Form.Group as={Col} className="mb-0">
-                                <FloatingLabel className="mb-0" label="Prioridade da Tarefa">
+                                <FloatingLabel controlId="prioridade" className="mb-0" label="Prioridade da Tarefa">
                                     <Form.Select required name="prioridade" value={tarefa.prioridade} onChange={handleChange}>
                                         <option value="" hidden>Selecione uma prioridade</option>
                                         <option value="alta">Alta</option>
@@ -226,11 +225,11 @@ function Tarefas(){
                                 </FloatingLabel>
                             </Form.Group>
                             <Form.Group as={Col} className="mb-0">
-                                <FloatingLabel className="mb-0" label="Responsável pela Tarefa">
+                                <FloatingLabel controlId="responsavelId" className="mb-0" label="Responsável pela Tarefa">
                                     <Form.Select required name="responsavelId" value={tarefa.responsavelId} onChange={handleChange}>
                                         <option value="0" hidden>Selecione um Responsavel</option>
                                         {
-                                            users.map((user) => (<option value={user.id} >{user.id}-{user.nome}</option>))
+                                            users.map((user) => (<option key={user.id} value={user.id} >{user.id}-{user.nome}</option>))
                                         }
                                     </Form.Select>
                                 </FloatingLabel>
@@ -238,26 +237,26 @@ function Tarefas(){
                         </Row>
 
                         <Form.Group className="mt-0">
-                            <FloatingLabel label="Descrição">
+                            <FloatingLabel controlId="descricao" label="Descrição">
                                 <Form.Control required name="descricao" value={tarefa.descricao} as="textarea" rows={3} onChange={handleChange}></Form.Control>
                             </FloatingLabel>
                         </Form.Group>
 
                         <Row>
                             <Form.Group as={Col} xs={6} className="m-md-0">
-                                <FloatingLabel className="m-md-0" label="Data de Criação">
+                                <FloatingLabel controlId="dtCriacao" className="m-md-0" label="Data de Criação">
                                     <Form.Control required name="dtCriacao" value={tarefa.dtCriacao} type="date" onChange={handleChange}></Form.Control>
                                 </FloatingLabel>
                             </Form.Group>
 
                             <Form.Group as={Col} xs={6} className="m-md-0">
-                                <FloatingLabel className="m-md-0" label="Data de Conclusão">
+                                <FloatingLabel controlId="dtConclusao" className="m-md-0" label="Data de Conclusão">
                                     <Form.Control required name="dtConclusao" value={tarefa.dtConclusao} type="date" onChange={handleChange}></Form.Control>
                                 </FloatingLabel>
                             </Form.Group>
 
                             <Form.Group as={Col} xs={6} className="m-md-0">
-                                <FloatingLabel label="Status da Tarefa">
+                                <FloatingLabel controlId="status" label="Status da Tarefa">
                                     <Form.Select required name="status" value={tarefa.status} onChange={handleChange}>
                                         <option value="emAndamento">Em Andamento</option>
                                         <option value="pendente">Pendente</option>
@@ -268,11 +267,11 @@ function Tarefas(){
                             </Form.Group>
                             
                             <Form.Group as={Col} xs={6} className="m-md-0">
-                                <FloatingLabel label="Projeto">
+                                <FloatingLabel controlId="projetoId" label="Projeto">
                                     <Form.Select required name="projetoId" value={tarefa.projetoId} onChange={handleChange}>
                                         <option value={0} hidden>Selecione um projeto</option>
                                         {
-                                            projetos.map((user) => (<option value={user.id} >{user.id}-{user.nome}</option>))
+                                            projetos.map((projeto) => (<option key={projeto.id} value={projeto.id} >{projeto.id}-{projeto.nome}</option>))
                                         }
                                     </Form.Select>
                                 </FloatingLabel>
@@ -288,11 +287,11 @@ function Tarefas(){
 
             <Modal show={showDel} onHide={() => {setShowDel(false)}}>
                 <Modal.Header closeButton><Modal.Title>Exclusão de Tarefa</Modal.Title></Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="d-md-flex justify-content-center pt-0">
                     <Form onSubmit={() => {excluir(tarefaId)}}>
-                        <div className="mb-3">Deseja realmente excluir essa tarefa?</div>
+                        <div className="mb-3 mt-0 d-sm-flex justify-content-center fs-5">Deseja realmente excluir essa tarefa?</div>
                         <div className="d-sm-flex flex-column">
-                            <Button variant="danger" className="mb-2" type="submit">Excluir</Button>
+                            <Button variant="danger" className="mb-3" type="submit">Excluir</Button>
                             <Button variant="outline-success" onClick={() => {setShowDel(false)}}>Cancelar</Button>
                         </div>
                     </Form>
